@@ -1,3 +1,4 @@
+alert(game);
 const options=()=>
     game.functionTimer(
         [20,120,300,500,200,1200,1000,1000],
@@ -24,5 +25,4 @@ const options=()=>
         ]
     );
 start();
-alert(game);
 setInterval(options,0);
