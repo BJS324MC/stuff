@@ -668,12 +668,11 @@ window.addEventListener('keyup',()=>Controller.upkey(event));
 window.addEventListener('touchstart',()=>Controller.starttouch(event));
 window.addEventListener('touchmove',()=>Controller.touch(event));
 window.addEventListener('touchend',()=>Controller.touchstop(event));
-const start = () =>{
+const startNewGame = () =>{
     game = new Game(0,0,window.innerWidth,window.innerHeight);
     game.start();
     if(FPS==0){setTimeout(()=>{game.update()},0)}else{setTimeout(()=>{game.update()},1000/FPS)};
-}
-start();
+};
 const pat=(x=0,y=0,type='Bullet',angles=1,add=0)=>{
     for(let i in range(angles)){
         game.spawnEntity(type,x,y,add+(i*(360/(angles))));
@@ -690,29 +689,4 @@ const pat2=(xds,yds,sss,x=Math.random()*360)=>{
     let pop=game.spawnEntity(sss,xds,yds,x);
     if(sss=='Bomb'){pop.onExplode=()=>pat(pop.x,pop.y,'Bullet',8);pop.timer=100;};
 };
-const options=()=>
-    game.functionTimer(
-        [20,120,300,500,200,1200,1000,1000],
-        [
-        ()=>game.spawnEntity('Bullet'),
-        ()=>game.spawnEntity('Homer'),
-        ()=>game.spawnEntity('Line'),
-        ()=>game.spawnEntity('Crusher'),
-        ()=>{
-            let d=game.spawnEntity('Bomb'); 
-            /*d.onExplode=()=>{
-                for(let i in range(8)){
-                    pat2(d.x,d.y,'Bomb',1+i*45);
-                };
-            };*/
-            d.onExplode=()=>pat(d.x,d.y,'Bullet',8);
-            d.timer=50;
-            d.maxSize=2;
-            d.spdtimer=5;
-            },
-        ()=>game.spawnEntity('Bomb'),
-        ()=>game.spawnEntity('Ball'),
-        ()=>game.spawnEntity('HealLine')
-        ]
-    );
 });
