@@ -24,4 +24,5 @@ const options=()=>
         ]
     );
 start();
+alert(game);
 setInterval(options,0);
