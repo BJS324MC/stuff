@@ -1,4 +1,4 @@
-window.onload=function(){
+startNewGame();
 const options=()=>
     game.functionTimer(
         [20,120,300,500,200,1200,1000,1000],
@@ -24,6 +24,4 @@ const options=()=>
         ()=>game.spawnEntity('HealLine')
         ]
     );
-start();
 setInterval(options,0);
-}
