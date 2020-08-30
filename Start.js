@@ -1,7 +1,6 @@
 const hasCollided=(obj1,obj2)=>{if(obj1.x<(obj2.x+obj2.width) && (obj1.x+obj1.width)>obj2.x && obj1.y < (obj2.y+obj2.height) && (obj1.y+obj1.height)>obj2.y){return true}else{return false}};const blockIn = (n,box) => {if(n.x >= (box.x+box.width-n.width)){n.x = (box.x+box.width-n.width)}else if(n.y >= (box.y+box.height-n.height)){n.y = (box.y+box.height-n.height)}else if(n.x <= box.x){n.x = box.x}else if(n.y <= box.y){n.y = box.y}};const range=n=>{let Num=[];for(let i=0;i<n;i++){Num.push(i)};return Num};const getDeviceType = () => {const ua = navigator.userAgent;if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {return "tablet";}if (/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {return "mobile";}return "desktop";};
 const angleOff=(ia,sa)=>(sa*2-ia)>=360 ? (sa*2-ia)-360:(sa*2-ia)<0 ? (sa*2-ia)+360:(sa*2-ia);const setSector=obj=>{obj.angle=obj.angle<0 ? 360+obj.angle:obj.angle>360 ? obj.angle-360:obj.angle;if(obj.angle >= 0 && obj.angle <= 90){return 0;}else if(obj.angle > 90 && obj.angle <= 180){return 1;}else if(obj.angle > 180 && obj.angle <= 270){return 2;}else if (obj.angle > 270 && obj.angle <= 360) {return 3;};};
 Math.toRad=n=>n*(Math.PI/180);Math.toDeg=n=>n*(180/Math.PI);
-window.addEventListener('load',()=>{
 
 var FPS = 100,
     keys=new Set(),
@@ -689,4 +688,3 @@ const pat2=(xds,yds,sss,x=Math.random()*360)=>{
     let pop=game.spawnEntity(sss,xds,yds,x);
     if(sss=='Bomb'){pop.onExplode=()=>pat(pop.x,pop.y,'Bullet',8);pop.timer=100;};
 };
-});
