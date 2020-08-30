@@ -1,6 +1,6 @@
 # A project.
 
-**Dont try to copy.**
+**Don't even try to copy.**
 
 [DEMO]
 
