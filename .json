@@ -1,0 +1,21 @@
+{
+  "point1":{
+    "type":"Point",
+    "x":420,
+    "y":69
+  },
+ "point2":{
+    "type":"Point",	
+    "x":367,
+    "y":200
+  },
+ "point3":{
+    "type":"Point",
+    "x":380,
+    "y":502,
+    "connectedPoints":{
+	      "0":"point1",
+        "1":"point2"
+    }
+  }
+}
