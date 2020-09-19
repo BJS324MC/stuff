@@ -1,79 +1,96 @@
-class BQuery{
-    constructor(a){
-        if(typeof a === "function")return window.addEventListener('load',a); 
-	this.element=(typeof a === "string") ? document.querySelector(a) : (typeof a === "object") ? a;
+class BQuery {
+    constructor(a) {
+        if (typeof a === "function") return window.addEventListener('load', a);
+        this.element = (typeof a === "string") ? document.querySelectorAll(a).length > 1 ? document.querySelectorAll(a) : document.querySelector(a) : a;
+        this.type = this.element.nodeType === 1 ? "element" : "collection";
     }
-    attr(attr,val){
-        for(let ele of this.element)if(val!=null)ele.setAttribute(attr,val);
-        let attrs=[];
-        for(let ele of this.element)attrs.push(ele.getAttribute(attr));
-        return attrs;
-    }
-    html(val){
-        for(let ele of this.element)if(val!=null)ele.innerHTML=val;
-        val=[];
-        for(let ele of this.element)val.push(ele.innerHTML);
+    attr(attr, val) {
+        if (val != null){if(this.type === "collection" )for (let ele of this.element) ele.setAttribute(attr, val);if(this.type === "element" )this.element.setAttribute(attr, val);};
+        val = [];
+        if(this.type === "element" )return this.element.getAttribute(attr);
+        if(this.type === "collection" )for (let ele of this.element) val.push(ele.getAttribute(attr));
         return val;
     }
-    text(val){
-        for(let ele of this.element){
-            if(val!=null)ele.textContent=val;
-        };
-        val=[];
-        for(let ele of this.element)val.push(ele.textContent);
+    html(val) {
+        if (val != null){if(this.type === "collection" )for (let ele of this.element) ele.innerHTML = val;if(this.type === "element" )this.element.innerHTML = val;};
+        val = [];
+        if(this.type === "element" )return this.element.innerHTML;
+        if(this.type === "collection" )for (let ele of this.element) val.push(ele.innerHTML);
         return val;
     }
-    children(){
-        let children=[],arr=[];
-        for(let ele of this.element)for(let E of ele.children)children.push(S(E.tagName.toLowerCase()));
+    text(val) {
+        if (val != null){if(this.type === "collection" )for (let ele of this.element) ele.textContent = val;if(this.type === "element" )this.element.textContent = val;};
+        val = [];
+        if(this.type === "element" )return this.element.textContent;
+        if(this.type === "collection" )for (let ele of this.element) val.push(ele.textContent);
+        return val;
+    }
+    children() {
+        let children = [], arr = [];
+        if(this.type === "collection" )for (let ele of this.element) for (let E of ele.children) children.push(S(E));
+        if(this.type === "element" )for(let E of this.element.children)children.push(S(E));
         return children;
     }
-    append(html){
-        for(let ele of this.element)ele.innerHTML+=html;
+    append(html) {
+        if(this.type === "collection" )for (let ele of this.element) ele.innerHTML += html;
+        if(this.type === "element" )this.element.innerHTML += html;
         return html;
     }
-    prepend(html){
-        for(let ele of this.element)ele.innerHTML=html+ele.innerHTML;
+    prepend(html) {
+        if(this.type === "collection" )for (let ele of this.element) ele.innerHTML = html + ele.innerHTML;
+        if(this.type === "element" )this.element.innerHTML = html + this.element.innerHTML;
         return html;
     }
-    remove(filter=e=>true){
-        for(let ele of this.element)if(filter(ele))ele.remove();
+    remove(filter = e => true) {
+        if(this.type === "collection" )for (let ele of this.element) if (filter(ele)) ele.remove();
+        if(this.type === "element" )if (filter(this.element)) this.element.remove();
     }
-    on(e,f){
-        for(let ele of this.element)ele.addEventListener(e,f);
+    on(e, f) {
+        if(this.type === "element" )this.element.addEventListener(e, f);
+        if(this.type === "collection" )for (let ele of this.element) ele.addEventListener(e, f);
     }
-    click(f){
-        for(let ele of this.element)ele.addEventListener('click',f);
+    click(f) {
+        if(this.type === "element" )this.element.addEventListener('click', f);
+        if(this.type === "collection" )for (let ele of this.element) ele.addEventListener('click', f);
     }
-    hover(f,g){
-        for(let ele of this.element)ele.addEventListener('mouseenter',f);
-        for(let ele of this.element)ele.addEventListener('mouseout',g);
+    hover(f, g) {
+        if(this.type === "element" )this.element.addEventListener('mouseenter', f);
+        if(this.type === "element" )this.element.addEventListener('mouseout', g);
+        if(this.type === "collection" )for (let ele of this.element) ele.addEventListener('mouseenter', f);
+        if(this.type === "collection" )for (let ele of this.element) ele.addEventListener('mouseout', g);
     }
-    out(f){
-        for(let ele of this.element)ele.addEventListener('mouseout',f);
+    out(f) {
+        if(this.type === "element" )this.element.addEventListener('mouseout', f);
+        if(this.type === "collection" )for (let ele of this.element) ele.addEventListener('mouseout', f);
     }
-    hide(){
-        for(let ele of this.element)ele.style.display='none';
+    hide() {
+        if(this.type === "element" )this.element.style.display = 'none';
+        if(this.type === "collection" )for (let ele of this.element) ele.style.display = 'none';
     }
-    show(){
-        for(let ele of this.element)ele.style.display='block';
+    show() {
+        if(this.type === "element" )this.element.style.display = 'block';
+        if(this.type === "collection" )for (let ele of this.element) ele.style.display = 'block';
     }
-    toggle(){
-        for(let ele of this.element)ele.style.display=ele.style.display=='none' ? 'block':'none';;
+    toggle() {
+        if(this.type === "element" )this.element.style.display = this.element.style.display == 'none' ? 'block' : 'none';
+        if(this.type === "collection" )for (let ele of this.element) ele.style.display = ele.style.display == 'none' ? 'block' : 'none';
     }
-    css(sel,v){
-        if(typeof sel === "object"){
-            for(let ele of this.element)for(let i in sel)ele.style[i]=sel[i];
-        }else if(sel && v){
-            for(let ele of this.element)ele.style[sel]=v;
+    css(sel, v) {
+        if (typeof sel === "object") {
+            if(this.type === "element" )for (let i in sel)this.element.style[i] = sel[i];
+            if(this.type === "collection" )for (let ele of this.element) for (let i in sel) ele.style[i] = sel[i];
+        } else if (sel && v) {
+            if(this.type === "element" )this.element.style[sel] = v;
+            if(this.type === "collection" )for (let ele of this.element) ele.style[sel] = v;
         };
-        v=[];
-        for(let ele of this.element)v.push(getComputedStyle(ele));
+        v = [];
+        if(this.type === "element" )return getComputedStyle(this.element);
+        if(this.type === "collection" )for (let ele of this.element) v.push(getComputedStyle(ele));
         return v;
     }
-    filter(f){
-        let fill=[];
-        for(let ele of this.element)if(f(ele))fill.push(S(ele.tagName.toLowerCase()));//[this.eles.indexOf(ele)]
+    filter(f) {
+        let fill = [];
+        for (let ele of this.element) if (f(ele)) fill.push(S(ele));
         return fill;
     }
 };
@@ -322,6 +339,7 @@ const angleOff=(ia,sa)=>(sa*2-ia)>=360 ? (sa*2-ia)-360:(sa*2-ia)<0 ? (sa*2-ia)+3
 Array.prototype.random=function(){let arr=this.valueOf();return arr[Math.floor(Math.random()*(arr.length-1))];};
 const arrRandom=arr=>arr[Math.floor(Math.random()*(arr.length-1))];
 const hexRandom=()=>{let h=hex(intRandom(0,254))+hex(intRandom(0,254))+hex(intRandom(0,254));h=h.replace(/0x/g,'');return "#"+h;};
+const getArr=iter=>{let arr=[];for(let i of iter)arr.push(i);return arr;};
 Object.values=obj=>{let arr=[];for(let i of Object.keys(obj))arr.push(i);return arr;};
 S(()=>{
     for(let C of S('dropdown').children())C.remove(e=>e.tagName!='ITEM'&&e.tagName!='DROPDOWN');
