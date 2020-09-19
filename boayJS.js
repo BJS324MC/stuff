@@ -1,81 +1,79 @@
 class BQuery{
     constructor(a){
-        if(typeof a === 'function')return window.addEventListener('load',a);
-        this.eles=[];
-        let col=(a[0]=='.') ? document.getElementsByClassName(a.slice(1)):(a[0]=='#') ? [document.getElementById(a.slice(1))]:document.getElementsByTagName(a);
-        for(let ele of col)this.eles.push(ele);
+        if(typeof a === "function")return window.addEventListener('load',a); 
+	this.element=(typeof a === "string") ? document.querySelector(a) : (typeof a === "object") ? a;
     }
     attr(attr,val){
-        for(let ele of this.eles)if(val!=null)ele.setAttribute(attr,val);
+        for(let ele of this.element)if(val!=null)ele.setAttribute(attr,val);
         let attrs=[];
-        for(let ele of this.eles)attrs.push(ele.getAttribute(attr));
+        for(let ele of this.element)attrs.push(ele.getAttribute(attr));
         return attrs;
     }
     html(val){
-        for(let ele of this.eles)if(val!=null)ele.innerHTML=val;
+        for(let ele of this.element)if(val!=null)ele.innerHTML=val;
         val=[];
-        for(let ele of this.eles)val.push(ele.innerHTML);
+        for(let ele of this.element)val.push(ele.innerHTML);
         return val;
     }
     text(val){
-        for(let ele of this.eles){
+        for(let ele of this.element){
             if(val!=null)ele.textContent=val;
         };
         val=[];
-        for(let ele of this.eles)val.push(ele.textContent);
+        for(let ele of this.element)val.push(ele.textContent);
         return val;
     }
     children(){
         let children=[],arr=[];
-        for(let ele of this.eles)for(let E of ele.children)children.push(S(E.tagName.toLowerCase()));
+        for(let ele of this.element)for(let E of ele.children)children.push(S(E.tagName.toLowerCase()));
         return children;
     }
     append(html){
-        for(let ele of this.eles)ele.innerHTML+=html;
+        for(let ele of this.element)ele.innerHTML+=html;
         return html;
     }
     prepend(html){
-        for(let ele of this.eles)ele.innerHTML=html+ele.innerHTML;
+        for(let ele of this.element)ele.innerHTML=html+ele.innerHTML;
         return html;
     }
     remove(filter=e=>true){
-        for(let ele of this.eles)if(filter(ele))ele.remove();
+        for(let ele of this.element)if(filter(ele))ele.remove();
     }
     on(e,f){
-        for(let ele of this.eles)ele.addEventListener(e,f);
+        for(let ele of this.element)ele.addEventListener(e,f);
     }
     click(f){
-        for(let ele of this.eles)ele.addEventListener('click',f);
+        for(let ele of this.element)ele.addEventListener('click',f);
     }
     hover(f,g){
-        for(let ele of this.eles)ele.addEventListener('mouseenter',f);
-        for(let ele of this.eles)ele.addEventListener('mouseout',g);
+        for(let ele of this.element)ele.addEventListener('mouseenter',f);
+        for(let ele of this.element)ele.addEventListener('mouseout',g);
     }
     out(f){
-        for(let ele of this.eles)ele.addEventListener('mouseout',f);
+        for(let ele of this.element)ele.addEventListener('mouseout',f);
     }
     hide(){
-        for(let ele of this.eles)ele.style.display='none';
+        for(let ele of this.element)ele.style.display='none';
     }
     show(){
-        for(let ele of this.eles)ele.style.display='block';
+        for(let ele of this.element)ele.style.display='block';
     }
     toggle(){
-        for(let ele of this.eles)ele.style.display=ele.style.display=='none' ? 'block':'none';;
+        for(let ele of this.element)ele.style.display=ele.style.display=='none' ? 'block':'none';;
     }
     css(sel,v){
         if(typeof sel === "object"){
-            for(let ele of this.eles)for(let i in sel)ele.style[i]=sel[i];
+            for(let ele of this.element)for(let i in sel)ele.style[i]=sel[i];
         }else if(sel && v){
-            for(let ele of this.eles)ele.style[sel]=v;
+            for(let ele of this.element)ele.style[sel]=v;
         };
         v=[];
-        for(let ele of this.eles)v.push(getComputedStyle(ele));
+        for(let ele of this.element)v.push(getComputedStyle(ele));
         return v;
     }
     filter(f){
         let fill=[];
-        for(let ele of this.eles)if(f(ele))fill.push(S(ele.tagName.toLowerCase()));//[this.eles.indexOf(ele)]
+        for(let ele of this.element)if(f(ele))fill.push(S(ele.tagName.toLowerCase()));//[this.eles.indexOf(ele)]
         return fill;
     }
 };
@@ -327,7 +325,7 @@ const hexRandom=()=>{let h=hex(intRandom(0,254))+hex(intRandom(0,254))+hex(intRa
 Object.values=obj=>{let arr=[];for(let i of Object.keys(obj))arr.push(i);return arr;};
 S(()=>{
     for(let C of S('dropdown').children())C.remove(e=>e.tagName!='ITEM'&&e.tagName!='DROPDOWN');
-    if(S('dropdown').eles[0])for(let c of S('dropdown').eles[0].childNodes)c.nodeValue='';
+    for(let c of S('dropdown').element)for(let v of c.childNodes)v.nodeValue='';
     S('dropdown').prepend(S('dropdown').attr('value'));
     S('dropdown').css({background:'grey',display:'block',textAlign:'center'});
     S('item').css({background:'lightgrey',border:'none',display:'none'});
