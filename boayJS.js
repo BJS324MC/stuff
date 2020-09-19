@@ -321,9 +321,16 @@ const hasCollided=(obj1,obj2)=>{if(obj1.x<(obj2.x+obj2.width) && (obj1.x+obj1.wi
 const blockIn = (n,box) => {if(n.x >= (box.x+box.width-n.width)){n.x = (box.x+box.width-n.width)}else if(n.y >= (box.y+box.height-n.height)){n.y = (box.y+box.height-n.height)}else if(n.x <= box.x){n.x = box.x}else if(n.y <= box.y){n.y = box.y}};
 const getDeviceType = () => {const ua = navigator.userAgent;if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {return "tablet";}if (/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {return "mobile";}return "desktop";};
 const angleOff=(ia,sa)=>(sa*2-ia)>=360 ? (sa*2-ia)-360:(sa*2-ia)<0 ? (sa*2-ia)+360:(sa*2-ia);
-const rad=n=>n*(Math.PI/180);
-const deg=n=>n*(180/Math.PI);
 Array.prototype.random=function(){let arr=this.valueOf();return arr[Math.floor(Math.random()*(arr.length-1))];};
 const arrRandom=arr=>arr[Math.floor(Math.random()*(arr.length-1))];
 const hexRandom=()=>{let h=hex(randint(0,254))+hex(randint(0,254))+hex(randint(0,254));h=h.replace(/0x/g,'');return "#"+h;};
 Object.values=obj=>{let arr=[];for(let i of Object.keys(obj)arr.push(i);return arr;};
+S(()=>{
+    for(let C of S('dropdown').children())C.remove(e=>e.tagName!='ITEM'&&e.tagName!='DROPDOWN');
+    for(let c of S('dropdown').eles[0].childNodes)c.nodeValue='';
+    S('dropdown').prepend(S('dropdown').attr('value'));
+    S('dropdown').css({background:'grey',display:'block',textAlign:'center',overflow:'none'});
+    S('item').css({background:'lightgrey',border:'none'});
+    S('dropdown').click(()=>S('item',true).toggle());
+    S('item').hide();
+});
