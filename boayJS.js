@@ -323,7 +323,7 @@ const getDeviceType = () => {const ua = navigator.userAgent;if (/(tablet|ipad|pl
 const angleOff=(ia,sa)=>(sa*2-ia)>=360 ? (sa*2-ia)-360:(sa*2-ia)<0 ? (sa*2-ia)+360:(sa*2-ia);
 Array.prototype.random=function(){let arr=this.valueOf();return arr[Math.floor(Math.random()*(arr.length-1))];};
 const arrRandom=arr=>arr[Math.floor(Math.random()*(arr.length-1))];
-const hexRandom=()=>{let h=hex(randint(0,254))+hex(randint(0,254))+hex(randint(0,254));h=h.replace(/0x/g,'');return "#"+h;};
+const hexRandom=()=>{let h=hex(intRandom(0,254))+hex(intRandom(0,254))+hex(intRandom(0,254));h=h.replace(/0x/g,'');return "#"+h;};
 Object.values=obj=>{let arr=[];for(let i of Object.keys(obj))arr.push(i);return arr;};
 S(()=>{
     for(let C of S('dropdown').children())C.remove(e=>e.tagName!='ITEM'&&e.tagName!='DROPDOWN');
