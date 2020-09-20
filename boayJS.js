@@ -2,7 +2,7 @@ class BQuery {
     constructor(a) {
         if (typeof a === "function") return window.addEventListener('load', a);
         this.element = (typeof a === "string") ? document.querySelectorAll(a).length > 1 ? document.querySelectorAll(a) : document.querySelector(a) : a;
-        this.type = this.element.nodeType === 1 ? "element" : "collection";
+        try{this.type = this.element.nodeType === 1 ? "element" : "collection"}catch(err){this.type = "error"};
     }
     attr(attr, val) {
         if (val != null){if(this.type === "collection" )for (let ele of this.element) ele.setAttribute(attr, val);if(this.type === "element" )this.element.setAttribute(attr, val);};
@@ -348,7 +348,8 @@ const getArr=iter=>{let arr=[];for(let i of iter)arr.push(i);return arr;};
 Object.values=obj=>{let arr=[];for(let i of Object.keys(obj))arr.push(i);return arr;};
 S(()=>{
     for(let C of S('dropdown').children())C.remove(e=>e.tagName!='ITEM'&&e.tagName!='DROPDOWN');
-    for(let c of S('dropdown').element)for(let v of c.childNodes)v.nodeValue='';
+    if(S('dropdown').type === "collection" )for(let c of S('dropdown').element)for(let v of c.childNodes)v.nodeValue='';
+    if(S('dropdown').type === "element" )for(let v of S('dropdown').element.childNodes)v.nodeValue='';
     S('dropdown').prepend(S('dropdown').attr('value'));
     S('dropdown').css({background:'grey',display:'block',textAlign:'center'});
     S('item').css({background:'lightgrey',border:'none',display:'none'});
