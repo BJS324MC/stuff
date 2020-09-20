@@ -2,7 +2,7 @@ class BQuery {
     constructor(a) {
         if (typeof a === "function") return window.addEventListener('load', a);
         this.element = (typeof a === "string") ? document.querySelectorAll(a).length > 1 ? document.querySelectorAll(a) : document.querySelector(a) : a;
-        this.type = a.nodeType === 1 ? "element" : "collection";
+        this.type = this.element.nodeType === 1 ? "element" : "collection";
     }
     attr(attr, val) {
         if (val != null){if(this.type === "collection" )for (let ele of this.element) ele.setAttribute(attr, val);if(this.type === "element" )this.element.setAttribute(attr, val);};
@@ -48,20 +48,24 @@ class BQuery {
     on(e, f) {
         if(this.type === "element" )this.element.addEventListener(e, f);
         if(this.type === "collection" )for (let ele of this.element) ele.addEventListener(e, f);
+        return this.element;
     }
     click(f) {
         if(this.type === "element" )this.element.addEventListener('click', f);
         if(this.type === "collection" )for (let ele of this.element) ele.addEventListener('click', f);
+        return this.element;
     }
     hover(f, g) {
         if(this.type === "element" )this.element.addEventListener('mouseenter', f);
         if(this.type === "element" )this.element.addEventListener('mouseout', g);
         if(this.type === "collection" )for (let ele of this.element) ele.addEventListener('mouseenter', f);
         if(this.type === "collection" )for (let ele of this.element) ele.addEventListener('mouseout', g);
+        return this.element;
     }
-    out(f) {
-        if(this.type === "element" )this.element.addEventListener('mouseout', f);
+    off(f) {
+        if(this.type === "element" )this.element.removeEventListener('mouseout', f);
         if(this.type === "collection" )for (let ele of this.element) ele.addEventListener('mouseout', f);
+        return this.element;
     }
     hide() {
         if(this.type === "element" )this.element.style.display = 'none';
@@ -74,6 +78,7 @@ class BQuery {
     toggle() {
         if(this.type === "element" )this.element.style.display = this.element.style.display == 'none' ? 'block' : 'none';
         if(this.type === "collection" )for (let ele of this.element) ele.style.display = ele.style.display == 'none' ? 'block' : 'none';
+        return this.element;
     }
     css(sel, v) {
         if (typeof sel === "object") {
