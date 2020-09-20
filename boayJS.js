@@ -2,7 +2,7 @@ class BQuery {
     constructor(a) {
         if (typeof a === "function") return window.addEventListener('load', a);
         this.element = (typeof a === "string") ? document.querySelectorAll(a).length > 1 ? document.querySelectorAll(a) : document.querySelector(a) : a;
-        this.type = this.element.nodeType === 1 ? "element" : "collection";
+        this.type = a.nodeType === 1 ? "element" : "collection";
     }
     attr(attr, val) {
         if (val != null){if(this.type === "collection" )for (let ele of this.element) ele.setAttribute(attr, val);if(this.type === "element" )this.element.setAttribute(attr, val);};
