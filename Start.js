@@ -587,7 +587,7 @@ spawnEntity(entity = ['Bullet', 'Line', 'Homer','Bomb','Crusher','Ball'][Math.fl
     };
 };
 const CONTROLS = new Map([['w',1],['d',10],['s',-1],['a',-10],['arrowup',1],['arrowright',10],['arrowdown',-1],['arrowleft',-10]]);
-let movespd=2;
+let movespd=5;
 class Controller{
     static presskey(pressedKey){
         pressedKey.preventDefault();
